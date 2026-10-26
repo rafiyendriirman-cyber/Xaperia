@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<title>XAPERIA v1</title>
+
+<style>
+:root {
+  --bg: #080b14;
+  --panel: #101727;
+  --accent: #00f5d4;
+  --text: #edf5ff;
+  --muted: #8c9bb2;
+  --border: rgba(0,245,212,.25);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #12313d, #080b14 65%);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.page {
+  max-width: 460px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 24px 18px 100px;
+}
+
+.center {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 25px;
+}
+
+.logo {
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--accent);
+  border-radius: 25px;
+  color: var(--accent);
+  font-size: 38px;
+  font-weight: bold;
+  box-shadow: 0 0 25px #00f5d444;
+  animation: pulse 2s infinite;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.brand span,
+.accent {
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.progress {
+  width: 220px;
+  height: 5px;
+  background: #263044;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  animation: loading 2s forwards;
+}
+
+@keyframes loading {
+  to { width: 100%; }
+}
+
+@keyframes pulse {
+  50% { box-shadow: 0 0 30px #00f5d455; }
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 21px;
+  margin-bottom: 16px;
+}
+
+#login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#login .card {
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 25px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-size: 17px;
+  margin-bottom: 13px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.fingerprint {
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  margin: 22px auto;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 38px;
+}
+
+.field {
+  text-align: left;
+  margin: 15px 0;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px;
+  background: #080f1b;
+  color: var(--text);
+  border: 1px solid #2b3a50;
+  border-radius: 10px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 13px;
+  font-weight: bold;
+}
+
+.primary {
+  background: var(--accent);
+  color: #061016;
+}
+
+.secondary {
+  background: #1a293b;
+  color: var(--text);
+  border: 1px solid #304158;
+}
+
+.full {
+  width: 100%;
+}
+
+.status {
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  margin-top: 12px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.header .brand {
+  font-size: 19px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--accent);
+}
+
+.hero {
+  padding: 21px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #123341, #101727);
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat {
+  min-width: 0;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid #26354a;
+  border-radius: 13px;
+}
+
+.stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.stat strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.section-title {
+  margin: 23px 0 12px;
+  font-size: 16px;
+}
+
+.roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.role {
+  padding: 13px;
+  background: #0e1725;
+  border: 1px solid #26374c;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.role strong {
+  display: block;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+.notice {
+  padding: 12px;
+  margin-top: 12px;
+  background: #0a2024;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.app-page > p {
+  margin-bottom: 18px;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #263145;
+  font-size: 13px;
+}
+
+.info-row span {
+  color: var(--muted);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.profile-avatar {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  margin: 8px auto 16px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 28px;
+}
+
+.wallpaper-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.wallpaper-option {
+  padding: 12px;
+  background: #111b2b;
+  color: var(--text);
+  border: 1px solid #304158;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 460px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 10px 12px;
+  background: #080b14f5;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  padding: 11px 3px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.nav-btn.active {
+  color: var(--accent);
+  background: #10252b;
+  border-color: var(--border);
+}
+
+audio {
+  width: 100%;
+  margin-top: 14px;
+}
+
+@media(max-width:360px) {
+  .page { padding: 18px 13px 95px; }
+  .card { padding: 17px; }
+  .brand { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<section id="loading" class="center">
+  <div class="logo">X</div>
+  <div class="brand">XAPERIA <span>v1</span></div>
+  <p class="eyebrow">Next generation interface</p>
+  <p class="muted small">INITIALIZING SYSTEM...</p>
+  <div class="progress"><div></div></div>
+  <p class="muted small">Menyiapkan antarmuka...</p>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="page hidden">
+  <div class="card">
+    <p class="eyebrow">Security terminal</p>
+    <h1>Welcome Back</h1>
+    <p class="muted small">Masuk ke dashboard demo</p>
+    <div class="fingerprint">◎</div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">USERNAME</label>
+        <input id="username" placeholder="Masukkan username" required>
+      </div>
+
+      <div class="field">
+        <label for="password">PASSWORD</label>
+        <input id="password" type="password" placeholder="Masukkan password" required>
+      </div>
+
+      <button class="btn primary full" type="submit">LOGIN SYSTEM</button>
+    </form>
+
+    <p id="loginStatus" class="status">Login demo lokal.</p>
+    <p class="muted small" style="margin-top:14px">
+      Demo: rahfi / xaperia123
+    </p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section id="intro" class="center hidden">
+  <div class="logo">✦</div>
+  <div class="brand">XAPERIA <span>v1</span></div>
+  <p id="introText" class="muted small">Dashboard siap dibuka.</p>
+  <button id="skipIntro" class="btn primary">MASUK DASHBOARD →</button>
+</section>
+
+<!-- APLIKASI -->
+<main id="app" class="page hidden">
+
+  <header class="header">
+    <div class="brand">XAPERIA <span>v1</span></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div id="headerAvatar" class="avatar">X</div>
+      <span id="headerProfile">Guest</span>
+    </div>
+  </header>
+
+  <!-- DASHBOARD -->
+  <section id="dashboardPage" class="app-page">
+    <div class="hero">
+      <p class="eyebrow">Control panel / 01</p>
+      <h1>Welcome, <span id="welcomeName" class="accent">Guest</span></h1>
+      <p>Interface futuristik untuk mengelola preferensi demo dalam satu tempat.</p>
+      <span class="badge">● SYSTEM ONLINE — DEMO</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <small>ACCOUNT ROLE</small>
+        <strong>Basic — Demo</strong>
+      </div>
+      <div class="stat">
+        <small>DEMO EXPIRES</small>
+        <strong id="expiredDate">—</strong>
+      </div>
+      <div class="stat">
+        <small>DEVICE</small>
+        <strong id="deviceName">Browser</strong>
+      </div>
+      <div class="stat">
+        <small>INTERFACE</small>
+        <strong>Web UI v1.0</strong>
+      </div>
+    </div>
+
+    <h2 class="section-title">Available roles</h2>
+    <div class="roles">
+      <div class="role"><strong>BASIC</strong>Demo access</div>
+      <div class="role"><strong>VVIP</strong>Preview role</div>
+      <div class="role"><strong>RESELLER</strong>Preview role</div>
+      <div class="role"><strong>DEVELOPER</strong>Preview role</div>
+    </div>
+
+    <h2 class="section-title">System notice</h2>
+    <div class="notice">
+      Ini hanya antarmuka demo lokal. Role dan masa aktif tidak memverifikasi akun eksternal.
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="toolsPage" class="app-page hidden">
+    <p class="eyebrow">Utilities / 02</p>
+    <h1>Demo Tools</h1>
+    <p class="muted">Simulasi visual lokal. Tidak mengirim serangan atau perintah ke perangkat lain.</p>
+
+    <div class="card">
+      <h2>Visual Simulator</h2>
+      <div class="field">
+        <label for="targetNumber">NOMOR CONTOH</label>
+        <input id="targetNumber" placeholder="Nomor contoh" inputmode="tel">
+      </div>
+      <div class="field">
+        <label for="effectType">MODE SIMULASI</label>
+        <select id="effectType">
+          <option>UI Preview</option>
+          <option>Status Check</option>
+          <option>Loading Demo</option>
+        </select>
+      </div>
+      <button id="runDemo" class="btn primary full">JALANKAN SIMULASI</button>
+      <p id="demoStatus" class="status"></p>
+    </div>
+
+    <div class="card">
+      <h2>Add Sender — Demo</h2>
+      <p class="muted small">Hanya memeriksa format nomor. Tidak menghubungkan WhatsApp atau membuat pairing code.</p>
+      <div class="field">
+        <label for="senderNumber">NOMOR CONTOH</label>
+        <input id="senderNumber" placeholder="+62..." inputmode="tel">
+      </div>
+      <button id="addSender" class="btn secondary full">VALIDASI NOMOR</button>
+      <p id="senderResult" class="status"></p>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="musicPage" class="app-page hidden">
+    <p class="eyebrow">Media / 03</p>
+    <h1>Music Player</h1>
+    <p class="muted">Putar file audio yang tersimpan di HP.</p>
+
+    <div class="card">
+      <div class="field">
+        <label for="musicSearch">CATATAN JUDUL MUSIK</label>
+        <input id="musicSearch" placeholder="Tulis judul lagu...">
+      </div>
+      <button id="searchMusic" class="btn secondary full">SIMPAN PENCARIAN</button>
+      <p id="musicStatus" class="status"></p>
+
+      <div class="field" style="margin-top:20px">
+        <label for="audioFile">PILIH FILE AUDIO</label>
+        <input id="audioFile" type="file" accept="audio/*">
+      </div>
+      <audio id="audioPlayer" controls></audio>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profilePage" class="app-page hidden">
+    <p class="eyebrow">Account / 04</p>
+    <h1>My Profile</h1>
+
+    <div class="card">
+      <div id="profileAvatar" class="profile-avatar">R</div>
+      <h2 id="profileName" style="text-align:center">Guest</h2>
+      <p id="profileUsername" class="muted small" style="text-align:center">@guest</p>
+
+      <div class="info-row"><b>Role</b><span>Basic — Demo</span></div>
+      <div class="info-row"><b>Demo expiry</b><span id="profileExpired">—</span></div>
+
+      <button id="logout" class="btn secondary full" style="margin-top:20px">LOGOUT</button>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="settingsPage" class="app-page hidden">
+    <p class="eyebrow">Preferences / 05</p>
+    <h1>Settings</h1>
+
+    <div class="card">
+      <h2>Wallpaper</h2>
+      <p class="muted small">Pilih latar antarmuka.</p>
+
+      <div class="wallpaper-list">
+        <button class="wallpaper-option" data-wallpaper="default">Neon Default</button>
+        <button class="wallpaper-option" data-wallpaper="ocean">Deep Ocean</button>
+        <button class="wallpaper-option" data-wallpaper="purple">Purple Space</button>
+        <button class="wallpaper-option" data-wallpaper="forest">Dark Forest</button>
+      </div>
+
+      <p id="wallpaperStatus" class="status"></p>
+
+      <h2 style="margin-top:24px">Preferences</h2>
+      <div class="field">
+        <label for="settingsLanguage">LANGUAGE</label>
+        <select id="settingsLanguage">
+          <option>Indonesia</option>
+          <option>English</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="settingsScreen">DISPLAY</label>
+        <select id="settingsScreen">
+          <option>Default</option>
+          <option>Compact</option>
+          <option>Comfortable</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- NAVIGASI -->
+<nav id="bottomNav" class="bottom-nav hidden">
+  <button class="nav-btn active" data-page="dashboardPage">⌂<br>Home</button>
+  <button class="nav-btn" data-page="toolsPage">⌘<br>Tools</button>
+  <button class="nav-btn" data-page="musicPage">♫<br>Music</button>
+  <button class="nav-btn" data-page="profilePage">◉<br>Profile</button>
+</nav>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const pageIds = [
+  "dashboardPage",
+  "toolsPage",
+  "musicPage",
+  "profilePage",
+  "settingsPage"
+];
+
+function showScreen(id) {
+  ["loading", "login", "intro", "app"].forEach(name => {
+    $(name).classList.add("hidden");
+  });
+
+  $(id).classList.remove("hidden");
+  $("bottomNav").classList.toggle("hidden", id !== "app");
+}
+
+function showPage(id) {
+  pageIds.forEach(name => {
+    $(name).classList.toggle("hidden", name !== id);
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === id);
+  });
+
+  window.scrollTo(0, 0);
+}
+
+function setStatus(id, message) {
+  $(id).textContent = message;
+}
+
+/* LOADING */
+window.addEventListener("load", () => {
+  setTimeout(() => showScreen("login"), 2100);
+});
+
+/* LOGIN DEMO */
+$("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const username = $("username").value.trim();
+  const password = $("password").value;
+
+  if (
+    username.toLowerCase() !== "rahfi" ||
+    password !== "xaperia123"
+  ) {
+    setStatus("loginStatus", "Login gagal. Periksa username dan password demo.");
+    return;
+  }
+
+  sessionStorage.setItem("xaperiaUser", username);
+  $("introText").textContent =
+    "Selamat datang, " + username + ". Dashboard demo siap digunakan.";
+
+  showScreen("intro");
+});
+
+/* MASUK DASHBOARD */
+$("skipIntro").addEventListener("click", () => {
+  const username = sessionStorage.getItem("xaperiaUser") || "rahfi";
+
+  $("welcomeName").textContent = username;
+  $("headerProfile").textContent = username;
+  $("headerAvatar").textContent = username.charAt(0).toUpperCase();
+  $("profileAvatar").textContent = username.charAt(0).toUpperCase();
+  $("profileName").textContent = username;
+  $("profileUsername").textContent = "@" + username;
+
+  const expiry = new Date();
+  expiry.setDate(expiry.getDate() + 30);
+
+  const date = expiry.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+
+  $("expiredDate").textContent = date;
+  $("profileExpired").textContent = date;
+
+  $("deviceName").textContent =
+    /Android/i.test(navigator.userAgent) ? "Android device" : "Web browser";
+
+  showScreen("app");
+  showPage("dashboardPage");
+});
+
+/* NAVIGASI */
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
+
+/* LOGOUT */
+$("logout").addEventListener("click", () => {
+  sessionStorage.removeItem("xaperiaUser");
+  $("loginForm").reset();
+  setStatus("loginStatus", "Kamu sudah logout dari demo.");
+  showScreen("login");
+});
+
+/* SIMULATOR LOKAL */
+$("runDemo").addEventListener("click", () => {
+  const number = $("targetNumber").value.trim();
+
+  if (!number) {
+    setStatus("demoStatus", "Masukkan nomor contoh terlebih dahulu.");
+    return;
+  }
+
+  setStatus(
+    "demoStatus",
+    "SIMULASI SELESAI\nNomor contoh: " + number +
+    "\nMode: " + $("effectType").value +
+    "\nTidak ada pesan atau perintah yang dikirim ke perangkat lain."
+  );
+});
+
+/* ADD SENDER DEMO */
+$("addSender").addEventListener("click", () => {
+  const number = $("senderNumber").value.trim();
+
+  if (!number) {
+    setStatus("senderResult", "Masukkan nomor contoh terlebih dahulu.");
+    return;
+  }
+
+  if (!/^\+?[0-9 ]{8,18}$/.test(number)) {
+    setStatus("senderResult", "Format nomor belum valid.");
+    return;
+  }
+
+  setStatus(
+    "senderResult",
+    "Nomor berhasil divalidasi untuk demo: " + number +
+    ". WhatsApp tidak tersambung dan pairing code tidak dibuat."
+  );
+});
+
+/* WALLPAPER */
+const wallpapers = {
+  default: "radial-gradient(circle at 50% 0%,#102a37,transparent 42%),#080b14",
+  ocean: "linear-gradient(145deg,#06354d,#080b14 75%)",
+  purple: "linear-gradient(145deg,#32135b,#080b14 75%)",
+  forest: "linear-gradient(145deg,#16412d,#080b14 75%)"
+};
+
+document.querySelectorAll("[data-wallpaper]").forEach(button => {
+  button.addEventListener("click", () => {
+    const choice = button.dataset.wallpaper;
+
+    document.body.style.background =
+      wallpapers[choice] || wallpapers.default;
+
+    localStorage.setItem("xaperiaWallpaper", choice);
+    setStatus("wallpaperStatus", "Wallpaper berhasil diterapkan dan disimpan.");
+  });
+});
+
+const savedWallpaper = localStorage.getItem("xaperiaWallpaper");
+
+if (savedWallpaper && wallpapers[savedWallpaper]) {
+  document.body.style.background = wallpapers[savedWallpaper];
+}
+
+/* PREFERENSI */
+$("settingsLanguage").addEventListener("change", event => {
+  setStatus("wallpaperStatus", "Bahasa pilihan: " + event.target.value);
+});
+
+$("settingsScreen").addEventListener("change", event => {
+  setStatus("wallpaperStatus", "Tampilan pilihan: " + event.target.value);
+});
+
+/* MUSIK LOKAL */
+$("searchMusic").addEventListener("click", () => {
+  const title = $("musicSearch").value.trim();
+
+  setStatus(
+    "musicStatus",
+    title
+      ? "Judul dicatat: " + title + ". Pilih file audio lokal untuk memutarnya."
+      : "Tulis judul musik terlebih dahulu."
+  );
+});
+
+let currentAudioUrl = null;
+
+$("audioFile").addEventListener("change", event => {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  if (currentAudioUrl) {
+    URL.revokeObjectURL(currentAudioUrl);
+  }
+
+  currentAudioUrl = URL.createObjectURL(file);
+  $("audioPlayer").src = currentAudioUrl;
+  $("audioPlayer").load();
+
+  setStatus("musicStatus", "File siap diputar: " + file.name);
+});
+
+console.log("XAPERIA v1 berhasil dimuat.");
+</script>
+
+</body>
+</html>
